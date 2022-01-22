@@ -116,7 +116,7 @@ def spell_check_all_urls(urls_to_check: List[str]) -> List[str]:
     return misspelled_words
 
 
-def create_hex_digest_list(list_to_digest: List[str]) -> str:
+def create_hex_digest(list_to_digest: List[str]) -> str:
     """
     Takes a list of words and creates a single hex digest string
 
@@ -124,16 +124,9 @@ def create_hex_digest_list(list_to_digest: List[str]) -> str:
 
     @returns a single string of the digest
     """
-
-    hex_digest_list = []
-    for item in list_to_digest:
-        encoded_item = hashlib.md5(item.encode())
-
-        hex_digest = encoded_item.hexdigest()
-
-        hex_digest_list.append(hex_digest)
-
-    return ''.join(hex_digest_list)
+    concated_list = ''.join(list_to_digest)
+    encoded_list = hashlib.md5(concated_list.encode())
+    return encoded_list.hexdigest()
 
 # ------------------------ DRIVER CODE ------------------------
 
@@ -156,7 +149,7 @@ urls = build_urls(word_list=parsed_words)
 misspelled_words_list = spell_check_all_urls(urls)
 
 # finally pass misspelled words to hex function
-answer = create_hex_digest_list(misspelled_words_list)
+answer = create_hex_digest(misspelled_words_list)
 
 # prints the final result to terminal
 print(
